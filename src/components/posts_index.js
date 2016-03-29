@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { fetchBlogPosts } from '../actions/index';
+import { Link } from 'react-router';
 
 class PostsIndex extends Component {
   componentWillMount(){
@@ -11,7 +11,14 @@ class PostsIndex extends Component {
 
   render (){
     return (
-      <div>{this.props.list}</div>
+      <div>
+        <div className="text-xs-right">
+          <Link to="/posts/new" className="btn btn-primary">
+            Add new Post
+          </Link>
+        </div>
+      <div>List of blog posts</div>
+      </div>
     );
   }
 }
@@ -20,4 +27,4 @@ class PostsIndex extends Component {
 } we don't need this if we do the export like below*/
 
 
-export default connect(null, {fetchBlogPosts : fetchBlogPosts})(PostsIndex);
+export default connect(null, { fetchBlogPosts })(PostsIndex);
