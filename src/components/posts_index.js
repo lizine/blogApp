@@ -5,8 +5,7 @@ import { Link } from 'react-router';
 
 class PostsIndex extends Component {
   componentWillMount(){
-    console.log("good time to call a ction creator");
-    const list = this.props.fetchBlogPosts();
+    this.props.fetchBlogPosts();
   }
 
   render (){
