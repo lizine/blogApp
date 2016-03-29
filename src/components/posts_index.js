@@ -7,7 +7,20 @@ class PostsIndex extends Component {
   componentWillMount(){
     this.props.fetchBlogPosts();
   }
-
+renderPosts(){
+  return this.props.posts.map((post) => {
+    return(
+      <li
+        key={post.id}
+        className="list-group-item">
+        <Link to={"posts/" + post.id} >
+          <span className="pull-xs-right">{post.categories}</span>
+          <span><strong>{post.title}</strong></span>
+          </Link>
+      </li>
+    );
+  });
+}
   render (){
     return (
       <div>
@@ -16,7 +29,8 @@ class PostsIndex extends Component {
             Add new Post
           </Link>
         </div>
-      <div>List of blog posts</div>
+      <h3>List of blog posts:</h3>
+      <ul className="list-group">{this.renderPosts()}</ul>
       </div>
     );
   }
@@ -25,5 +39,8 @@ class PostsIndex extends Component {
   return bindActionCreators({fetchBlogPosts}, dispatch);
 } we don't need this if we do the export like below*/
 
+function mapStateToProps(state){
+  return { posts : state.posts.all };
+}
 
-export default connect(null, { fetchBlogPosts })(PostsIndex);
+export default connect(mapStateToProps, { fetchBlogPosts })(PostsIndex);
