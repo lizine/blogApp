@@ -1,40 +1,43 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchSinglePost } from '../actions/index';
+import { fetchSinglePost, deletePost } from '../actions/index';
 import { Link } from 'react-router';
 
 class PostsShow extends Component {
   componentWillMount(){
     this.props.fetchSinglePost(this.props.params.id);
   }
-/*renderPosts(){
-  return this.props.post.map((post) => {
-    return(
-      <li
-        key={post.id}
-        className="list-group-item">
-        <span className="pull-xs-right">{post.categories}</span>
-        <span><strong>{post.title}</strong></span>
-        <span><strong>{post.content}</strong></span>
+  static contextTypes = {
+    router : PropTypes.object
+  };
 
-      </li>
-    );
-  });
-}*/
+onDeleteClick(){
+  this.props.deletePost(this.props.params.id)
+  .then(() => {
+      //navigate user to index by calling this.context.router.push
+      this.context.router.push('/');
+    });
+};
+
   render (){
  const { post } = this.props; {/*lets pull post to its own const*/}
+
  if(!this.props.post){
    return <div>Loading..</div>
  }
     return (
       <div>
-        <div className="text-xs-right">
-          <Link to="/" className="btn btn-primary">
+          <Link to="/">
             Go Back to list
           </Link>
-        </div>
-      <h3>{post.title}</h3>
-        <p>Categories: {post.categories}</p>
+          <button
+          className="btn btn-danger pull-xs-right"
+          onClick={this.onDeleteClick.bind(this)}
+          >
+          Delete Post
+          </button>
+          <h3>{post.title}</h3>
+          <p>Categories: {post.categories}</p>
           <p>{post.content}</p>
       </div>
     );
@@ -48,4 +51,4 @@ function mapStateToProps(state){
   return { post : state.posts.post };
 }
 
-export default connect(mapStateToProps, { fetchSinglePost })(PostsShow);
+export default connect(mapStateToProps, { fetchSinglePost, deletePost })(PostsShow);
