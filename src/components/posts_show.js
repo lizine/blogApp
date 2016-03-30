@@ -22,6 +22,7 @@ class PostsShow extends Component {
   });
 }*/
   render (){
+ const { post } = this.props; {/*lets pull post to its own const*/}
  if(!this.props.post){
    return <div>Loading..</div>
  }
@@ -32,9 +33,9 @@ class PostsShow extends Component {
             Go Back to list
           </Link>
         </div>
-      <h3>Blogpost: {this.props.params.id}</h3>
-        <p>{this.props.post.title}</p>
-          <p>{this.props.post.content}</p>
+      <h3>{post.title}</h3>
+        <p>Categories: {post.categories}</p>
+          <p>{post.content}</p>
       </div>
     );
   }
